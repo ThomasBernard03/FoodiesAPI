@@ -28,6 +28,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    
+    FakeDataSeeder.Seed(app.Services);
 }
 
 app.UseHttpsRedirection();
