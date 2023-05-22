@@ -1,0 +1,6 @@
+.idea
+bin
+obj
+Foodies/appsettings.json
+Foodies/appsettings.Development.json
+Foodies/Properties
