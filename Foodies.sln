@@ -2,9 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodies.Api", "Foodies.Api\Foodies.Api.csproj", "{943D85AF-6F65-41E1-8CED-A8FE5E418F95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodies.Repository", "Foodies.Repository\Foodies.Repository.csproj", "{FBD795A8-5F08-476D-A138-E8AE5A658B48}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodies.Services", "Foodies.Services\Foodies.Services.csproj", "{B6255FC9-185B-439E-B238-8B6F30AC91E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodies.DataAccess", "Foodies.DataAccess\Foodies.DataAccess.csproj", "{FBD795A8-5F08-476D-A138-E8AE5A658B48}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foodies.Domain", "Foodies.Domain\Foodies.Domain.csproj", "{896E592D-39A8-4F26-BB5F-F9EC3996F356}"
 EndProject
@@ -22,10 +20,6 @@ Global
 		{FBD795A8-5F08-476D-A138-E8AE5A658B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBD795A8-5F08-476D-A138-E8AE5A658B48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBD795A8-5F08-476D-A138-E8AE5A658B48}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6255FC9-185B-439E-B238-8B6F30AC91E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6255FC9-185B-439E-B238-8B6F30AC91E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6255FC9-185B-439E-B238-8B6F30AC91E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6255FC9-185B-439E-B238-8B6F30AC91E6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{896E592D-39A8-4F26-BB5F-F9EC3996F356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{896E592D-39A8-4F26-BB5F-F9EC3996F356}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{896E592D-39A8-4F26-BB5F-F9EC3996F356}.Release|Any CPU.ActiveCfg = Release|Any CPU
