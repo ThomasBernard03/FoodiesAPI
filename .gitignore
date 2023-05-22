@@ -1,6 +1,6 @@
 .idea
 bin
 obj
-Foodies/appsettings.json
-Foodies/appsettings.Development.json
-Foodies/Properties
+Foodies.Api/appsettings.json
+Foodies.Api/appsettings.Development.json
+Foodies.Api/Properties
