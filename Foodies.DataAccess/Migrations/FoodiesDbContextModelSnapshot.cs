@@ -37,9 +37,40 @@ namespace Foodies.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("UnitOfMeasureId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("UnitOfMeasureId");
+
                     b.ToTable("Ingredient");
+                });
+
+            modelBuilder.Entity("Foodies.Domain.UnitOfMeasure", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UnitOfMeasure");
+                });
+
+            modelBuilder.Entity("Foodies.Domain.Ingredient", b =>
+                {
+                    b.HasOne("Foodies.Domain.UnitOfMeasure", null)
+                        .WithMany()
+                        .HasForeignKey("UnitOfMeasureId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Foodies.DataAccess.Migrations
 {
     [DbContext(typeof(FoodiesDbContext))]
-    [Migration("20230522184558_ProjectInit")]
-    partial class ProjectInit
+    [Migration("20230522201907_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,9 +40,40 @@ namespace Foodies.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("UnitOfMeasureId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("UnitOfMeasureId");
+
                     b.ToTable("Ingredient");
+                });
+
+            modelBuilder.Entity("Foodies.Domain.UnitOfMeasure", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UnitOfMeasure");
+                });
+
+            modelBuilder.Entity("Foodies.Domain.Ingredient", b =>
+                {
+                    b.HasOne("Foodies.Domain.UnitOfMeasure", null)
+                        .WithMany()
+                        .HasForeignKey("UnitOfMeasureId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

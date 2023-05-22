@@ -17,14 +17,47 @@ public static class FakeDataSeeder
             context.Database.EnsureDeleted();
 
             context.Database.Migrate();
+            
+            var unitsOfMeasures = new List<UnitOfMeasure>
+            {
+                new UnitOfMeasure { Name = "Gramme" },
+                new UnitOfMeasure { Name = "Kilogramme" },
+                new UnitOfMeasure { Name = "Milligramme" },
+                new UnitOfMeasure { Name = "Once" },
+                new UnitOfMeasure { Name = "Livre" },
+                new UnitOfMeasure { Name = "Quintal" },
+                new UnitOfMeasure { Name = "Tasse" },
+                new UnitOfMeasure { Name = "Cuillère à soupe" },
+                new UnitOfMeasure { Name = "Cuillère à café" },
+                new UnitOfMeasure { Name = "Litre" },
+                new UnitOfMeasure { Name = "Millilitre" },
+                new UnitOfMeasure { Name = "Pinte" },
+                new UnitOfMeasure { Name = "Quart de gallon" },
+                new UnitOfMeasure { Name = "Gallon" },
+                new UnitOfMeasure { Name = "Pouce" },
+                new UnitOfMeasure { Name = "Pied" },
+                new UnitOfMeasure { Name = "Yard" },
+                new UnitOfMeasure { Name = "Centimètre" },
+                new UnitOfMeasure { Name = "Mètre" },
+                new UnitOfMeasure { Name = "Kilomètre" },
+                new UnitOfMeasure { Name = "Pied carré" },
+                new UnitOfMeasure { Name = "Yard carré" },
+                new UnitOfMeasure { Name = "Mètre carré" },
+                new UnitOfMeasure { Name = "Acre" },
+                new UnitOfMeasure { Name = "Hectare" },
+            };
+            
+            context.Set<UnitOfMeasure>().AddRange(unitsOfMeasures);
+            context.SaveChanges();
 
-            var ingredients = new Faker<Ingredient>()
-                .RuleFor(i => i.Name, f => f.Commerce.Product())
-                .RuleFor(i => i.Picture, f => f.Image.PicsumUrl())
-                .Generate(100);
-            
-            
-            context.Set<Ingredient>().AddRange(ingredients);
+
+            //var ingredients = new Faker<Ingredient>()
+            //    .RuleFor(i => i.Name, f => f.Commerce.ProductName())
+            //    .RuleFor(i => i.Picture, f => f.Image.PicsumUrl())
+            //    .RuleFor(i => i.UnitsOfMeasureId, f => f.Random.Int(1, unitsOfMeasures.Count))
+            //    .Generate(100);
+            //
+            //context.Set<Ingredient>().AddRange(ingredients);
 
 
 

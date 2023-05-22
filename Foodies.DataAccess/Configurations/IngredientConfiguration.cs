@@ -1,14 +1,19 @@
+using Foodies.DataAccess.Configurations.Base;
 using Foodies.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Foodies.DataAccess.Configurations;
 
-public class IngredientConfiguration : IEntityTypeConfiguration<Ingredient>
+public class IngredientConfiguration : BaseEntityConfiguration<Ingredient>
 {
-    public void Configure(EntityTypeBuilder<Ingredient> builder)
+    public override void Configure(EntityTypeBuilder<Ingredient> builder)
     {
-        builder.Property(e => e.Id)
-            .ValueGeneratedOnAdd(); // Add auto-increment
+        base.Configure(builder);
+
+        builder.HasOne<UnitOfMeasure>()
+            .WithMany()
+            .HasForeignKey(i => i.UnitOfMeasureId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
