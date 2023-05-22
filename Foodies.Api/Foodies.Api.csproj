@@ -12,4 +12,9 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Foodies.DataAccess\Foodies.DataAccess.csproj" />
+      <ProjectReference Include="..\Foodies.Domain\Foodies.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
