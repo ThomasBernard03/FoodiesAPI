@@ -1,6 +1,7 @@
 using AutoMapper;
 using Foodies.DataAccess;
 using Foodies.Domain;
+using Foodies.Models.Requests.Recipe;
 using Foodies.Models.Responses.Recipe;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,55 @@ public class RecipeController : ControllerBase
         var recipes = await _context.Set<Recipe>().ToArrayAsync();
 
         return _mapper.Map<IEnumerable<RecipeResponse>>(recipes);
+    }
+
+    #endregion
+    
+    #region POST recipes
+
+    [HttpPost]
+    public async Task<ActionResult<RecipeResponse>> CreateRecipes([FromBody] RecipeRequest request)
+    {
+        var recipe = _mapper.Map<Recipe>(request);
+
+        await _context.Set<Recipe>().AddAsync(recipe);
+        await _context.SaveChangesAsync();
+        
+        return _mapper.Map<RecipeResponse>(recipe);
+    }
+
+    #endregion
+    
+    
+    #region GET recipes/{id}
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<RecipeResponse>> GetRecipes([FromRoute] long id)
+    {
+        var recipe = await _context.Set<Recipe>().FirstOrDefaultAsync(i => i.Id == id);
+
+        if (recipe is null)
+            return NotFound();
+
+        return _mapper.Map<RecipeResponse>(recipe);
+    }
+
+    #endregion
+    
+    #region DELETE ingredients/{id}
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteRecipes([FromRoute] long id)
+    {
+        var recipe = await _context.Set<Recipe>().FirstOrDefaultAsync(i => i.Id == id);
+
+        if (recipe is null)
+            return NotFound($"Recipe with id {id} doesn't exist");
+
+        _context.Set<Recipe>().Remove(recipe);
+        await _context.SaveChangesAsync();
+
+        return Ok();
     }
 
     #endregion
