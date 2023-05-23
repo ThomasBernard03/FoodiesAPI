@@ -60,7 +60,15 @@ public static class FakeDataSeeder
             context.Set<Ingredient>().AddRange(ingredients);
 
 
+            var recipes = new Faker<Recipe>()
+                    .RuleFor(i => i.Name, f => f.Commerce.ProductName())
+                    .RuleFor(i => i.Picture, f => f.Image.PicsumUrl())
+                    .RuleFor(i => i.Duration, f => TimeSpan.FromMinutes(f.Random.Int(1, 360)))
+                    .Generate(50);
 
+            context.Set<Recipe>().AddRange(recipes);
+
+            
             context.SaveChanges();
         }
     }

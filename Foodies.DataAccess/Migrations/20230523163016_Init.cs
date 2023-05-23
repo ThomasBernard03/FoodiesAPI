@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -10,6 +11,21 @@ namespace Foodies.DataAccess.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Recipe",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Picture = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Duration = table.Column<TimeSpan>(type: "time", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Recipe", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "UnitOfMeasure",
                 columns: table => new
@@ -55,6 +71,9 @@ namespace Foodies.DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Ingredient");
+
+            migrationBuilder.DropTable(
+                name: "Recipe");
 
             migrationBuilder.DropTable(
                 name: "UnitOfMeasure");

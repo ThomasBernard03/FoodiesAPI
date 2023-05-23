@@ -14,6 +14,7 @@ builder.Services.AddSwaggerGen();
 var mapperConfig = new MapperConfiguration(config =>
 {
     config.AddProfile<IngredientProfile>();
+    config.AddProfile<RecipeProfile>();
 });
 
 builder.Services.AddSingleton(mapperConfig.CreateMapper());

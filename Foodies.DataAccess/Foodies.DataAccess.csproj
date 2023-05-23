@@ -21,4 +21,8 @@
       <ProjectReference Include="..\Foodies.Domain\Foodies.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Migrations\" />
+    </ItemGroup>
+
 </Project>
