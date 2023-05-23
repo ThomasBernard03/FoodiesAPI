@@ -2,6 +2,7 @@ using AutoMapper;
 using Foodies.DataAccess;
 using Foodies.Domain;
 using Foodies.Models.Requests.Recipe;
+using Foodies.Models.Requests.Step;
 using Foodies.Models.Responses.Recipe;
 using Foodies.Models.Responses.Step;
 using Microsoft.AspNetCore.Mvc;
@@ -65,7 +66,7 @@ public class RecipeController : ControllerBase
 
     #endregion
     
-    #region DELETE ingredients/{id}
+    #region DELETE recipes/{id}
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteRecipes([FromRoute] long id)
@@ -97,6 +98,27 @@ public class RecipeController : ControllerBase
         var steps = await _context.Set<Step>().Where(s => s.RecipeId == id).ToArrayAsync();
 
         return _mapper.Map<IEnumerable<StepResponse>>(steps).ToList();
+    }
+
+    #endregion
+    
+    #region POST recipes/{id}/steps
+
+    [HttpPost("{id}/steps")]
+    public async Task<ActionResult<StepResponse>> CreateRecipesSteps([FromRoute] long id, [FromBody] StepRequest request)
+    {
+        var recipe = await _context.Set<Recipe>().FirstOrDefaultAsync(r => r.Id == id);
+        
+        if (recipe is null)
+            return NotFound($"The recipe with id {id} doesn't exist");
+
+        var step = _mapper.Map<Step>(request);
+        step.RecipeId = id;
+
+        await _context.Set<Step>().AddAsync(step);
+        await _context.SaveChangesAsync();
+        
+        return _mapper.Map<StepResponse>(step);
     }
 
     #endregion
