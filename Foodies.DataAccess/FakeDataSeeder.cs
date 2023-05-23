@@ -51,13 +51,13 @@ public static class FakeDataSeeder
             context.SaveChanges();
 
 
-            //var ingredients = new Faker<Ingredient>()
-            //    .RuleFor(i => i.Name, f => f.Commerce.ProductName())
-            //    .RuleFor(i => i.Picture, f => f.Image.PicsumUrl())
-            //    .RuleFor(i => i.UnitsOfMeasureId, f => f.Random.Int(1, unitsOfMeasures.Count))
-            //    .Generate(100);
-            //
-            //context.Set<Ingredient>().AddRange(ingredients);
+            var ingredients = new Faker<Ingredient>()
+                .RuleFor(i => i.Name, f => f.Commerce.ProductName())
+                .RuleFor(i => i.Picture, f => f.Image.PicsumUrl())
+                .RuleFor(i => i.UnitOfMeasureId, f => f.Random.Int(1, unitsOfMeasures.Count))
+                .Generate(100);
+            
+            context.Set<Ingredient>().AddRange(ingredients);
 
 
 
