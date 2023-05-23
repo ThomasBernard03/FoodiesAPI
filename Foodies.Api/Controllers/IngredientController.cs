@@ -53,6 +53,7 @@ public class IngredientController : ControllerBase
 
     #endregion
     
+    
     #region GET ingredients/{id}
 
     [HttpGet("{id}")]
@@ -64,6 +65,24 @@ public class IngredientController : ControllerBase
             return NotFound();
 
         return _mapper.Map<IngredientResponse>(ingredient);
+    }
+
+    #endregion
+    
+    #region DELETE ingredients/{id}
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteIngredients([FromRoute] long id)
+    {
+        var ingredient = await _context.Set<Ingredient>().FirstOrDefaultAsync(i => i.Id == id);
+
+        if (ingredient is null)
+            return NotFound($"Ingredient with id {id} doesn't exist");
+
+        _context.Set<Ingredient>().Remove(ingredient);
+        await _context.SaveChangesAsync();
+
+        return Ok();
     }
 
     #endregion
