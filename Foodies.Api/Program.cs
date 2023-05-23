@@ -15,6 +15,7 @@ var mapperConfig = new MapperConfiguration(config =>
 {
     config.AddProfile<IngredientProfile>();
     config.AddProfile<RecipeProfile>();
+    config.AddProfile<StepProfile>();
 });
 
 builder.Services.AddSingleton(mapperConfig.CreateMapper());

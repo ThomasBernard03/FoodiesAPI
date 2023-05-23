@@ -6,5 +6,7 @@ public class Recipe : BaseEntity
 {
     public string Name { get; set; } = "";
     public string Picture { get; set; } = "";
-    public TimeSpan Duration { get; set; } // Duration in minutes
+    public TimeSpan Duration { get; set; } 
+    
+    public ICollection<Step> Steps { get;  }
 }

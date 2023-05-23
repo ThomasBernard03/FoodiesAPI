@@ -3,6 +3,7 @@ using Foodies.DataAccess;
 using Foodies.Domain;
 using Foodies.Models.Requests.Recipe;
 using Foodies.Models.Responses.Recipe;
+using Foodies.Models.Responses.Step;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -78,6 +79,24 @@ public class RecipeController : ControllerBase
         await _context.SaveChangesAsync();
 
         return Ok();
+    }
+
+    #endregion
+    
+
+    #region GET recipes/{id}/steps
+
+    [HttpGet("{id}/steps")]
+    public async Task<ActionResult<IEnumerable<StepResponse>>> GetRecipesSteps([FromRoute] long id)
+    {
+        var recipe = await _context.Set<Recipe>().FirstOrDefaultAsync(r => r.Id == id);
+        
+        if (recipe is null)
+            return NotFound($"The recipe with id {id} doesn't exist");
+        
+        var steps = await _context.Set<Step>().Where(s => s.RecipeId == id).ToArrayAsync();
+
+        return _mapper.Map<IEnumerable<StepResponse>>(steps).ToList();
     }
 
     #endregion
