@@ -1,6 +1,7 @@
 using AutoMapper;
 using Foodies.DataAccess;
 using Foodies.Mapping;
+using Foodies.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,13 +26,16 @@ builder.Services.AddScoped(_ => new FoodiesDbContext(dbConnection));
 
 var app = builder.Build();
 
+app.UseMiddleware<AuthenticationMiddleware>();
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
     
-    FakeDataSeeder.Seed(app.Services);
+    //FakeDataSeeder.Seed(app.Services);
 }
 
 app.UseHttpsRedirection();
