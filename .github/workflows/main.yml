@@ -15,8 +15,6 @@ jobs:
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.101
 
     - name: Install dependencies
       run: dotnet restore
@@ -34,6 +32,6 @@ jobs:
       uses: akhileshns/heroku-deploy@v3.6.8 # This action will deploy to Heroku
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: "your-heroku-app-name" 
-        heroku_email: "your-email@example.com"
+        heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+        heroku_email: ${{secrets.HEROKU_MAIL}}
         appdir: "publish"
