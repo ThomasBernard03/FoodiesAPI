@@ -3,6 +3,7 @@ using Foodies.DataAccess;
 using Foodies.Domain;
 using Foodies.Models.Requests.Ingredients;
 using Foodies.Models.Responses.Ingredients;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -83,6 +84,29 @@ public class IngredientController : ControllerBase
         await _context.SaveChangesAsync();
 
         return Ok();
+    }
+
+    #endregion
+
+    #region PATCH ingredients/{id}
+
+    [HttpPatch("{id}")]
+    public async Task<ActionResult<IngredientResponse>> UpdateIngredients([FromRoute] long id, [FromBody] JsonPatchDocument<IngredientRequest> request)
+    {
+        var ingredient = await _context.Set<Ingredient>().FirstOrDefaultAsync(i => i.Id == id);
+
+        if (ingredient is null)
+            return NotFound($"Ingredient with id {id} doesn't exist");
+
+        var updateCommand = _mapper.Map<IngredientRequest>(ingredient);
+        
+        request.ApplyTo(updateCommand);
+
+        _mapper.Map(updateCommand, ingredient);
+
+        _context.Update(ingredient);
+
+        return _mapper.Map<IngredientResponse>(ingredient);
     }
 
     #endregion

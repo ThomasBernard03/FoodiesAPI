@@ -13,6 +13,7 @@ public class IngredientProfile : Profile
         CreateMap<Ingredient, IngredientResponse>();
         
         // IngredientRequest => Ingredient
-        CreateMap<IngredientRequest, Ingredient>();
+        CreateMap<IngredientRequest, Ingredient>()
+            .ReverseMap();
     }
 }
