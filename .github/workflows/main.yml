@@ -28,11 +28,8 @@ jobs:
     - name: Publish
       run: dotnet publish --configuration Release --no-build -o ./publish
 
-    - name: Deploy to Heroku
-      uses: akhileshns/heroku-deploy@v3.6.8 # This action will deploy to Heroku
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
       with:
-        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
-        heroku_email: ${{secrets.HEROKU_MAIL}}
-        appdir: "publish"
-        dontuseforce: 1
+        name: published-app
+        path: ./publish
