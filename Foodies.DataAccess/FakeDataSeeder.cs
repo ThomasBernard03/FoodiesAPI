@@ -44,10 +44,19 @@ public static class FakeDataSeeder
 
             context.Set<Ingredient>().AddRange(ingredients);
 
+            var users = new List<User>
+            {
+                new(){ AuthId = "b7d03a684f733568334f1e0253ed0584ef1f2ddf994a5dbcb05e6a791207a030", AuthProvider = "mock" }
+            };
+            
+            context.Set<User>().AddRange(users);
+
+
             var recipe = new Recipe
             {
                 Duration = TimeSpan.FromMinutes(40), Name = "Pasta with artichokes and peppers",
-                Picture = "https://assets.afcdn.com/recipe/20160926/64114_w640h486c1cx1872cy2808.webp"
+                Picture = "https://assets.afcdn.com/recipe/20160926/64114_w640h486c1cx1872cy2808.webp",
+                Creator = users.First() 
             };
 
             context.Set<Recipe>().Add(recipe);
