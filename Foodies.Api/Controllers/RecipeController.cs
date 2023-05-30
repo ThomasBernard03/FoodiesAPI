@@ -55,14 +55,44 @@ public class RecipeController : ControllerBase
     #region GET recipes/{id}
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<RecipeResponse>> GetRecipes([FromRoute] long id)
+    public async Task<ActionResult<RecipeResponse>> GetRecipes([FromRoute] long id,  [FromQuery] string? includes = null)
     {
         var recipe = await _context.Set<Recipe>().FirstOrDefaultAsync(i => i.Id == id);
-
+        
         if (recipe is null)
             return NotFound();
 
-        return _mapper.Map<RecipeResponse>(recipe);
+        var result = _mapper.Map<RecipeResponse>(recipe);
+
+        if (!string.IsNullOrWhiteSpace(includes))
+        {
+            foreach (var include in includes.Split(','))
+            {
+                if (include.Trim().ToLower() == "step")
+                {
+                    var steps = await _context.Set<Step>().Where(s => s.RecipeId == id)
+                        .Include(s => s.StepIngredients)
+                            .ThenInclude(si => si.Ingredient)
+                        .Include(s => s.StepIngredients)
+                            .ThenInclude(si => si.UnitOfMeasure) 
+                        .ToArrayAsync();
+                    
+                    result.Steps = _mapper.Map<IEnumerable<StepResponse>>(steps);
+                }
+
+                //if (include.Trim().ToLower() == "reports")
+                //{
+                //    var reports = await _context.Set<ShelterReporting>()
+                //        .Where(r => r.ShelterId == shelter.Id).ToArrayAsync();
+                //  
+                //    result.Reports = _mapper.Map<IEnumerable<GetShelterByIdReportResponse>>(reports);
+                //}
+            }
+        }
+
+
+
+        return result;
     }
 
     #endregion
@@ -112,14 +142,20 @@ public class RecipeController : ControllerBase
     #region GET recipes/{id}/steps
 
     [HttpGet("{id}/steps")]
-    public async Task<ActionResult<IEnumerable<StepResponse>>> GetRecipesSteps([FromRoute] long id)
+    public async Task<ActionResult<IEnumerable<StepResponse>>> GetRecipesSteps([FromRoute] long id, [FromQuery] string? includes = null)
     {
         var recipe = await _context.Set<Recipe>().FirstOrDefaultAsync(r => r.Id == id);
         
         if (recipe is null)
             return NotFound($"The recipe with id {id} doesn't exist");
         
-        var steps = await _context.Set<Step>().Where(s => s.RecipeId == id).ToArrayAsync();
+        var steps = await _context.Set<Step>().Where(s => s.RecipeId == id)
+            .Include(s => s.StepIngredients)
+                .ThenInclude(si => si.Ingredient)
+            .Include(s => s.StepIngredients)
+                .ThenInclude(si => si.UnitOfMeasure) 
+            .ToArrayAsync();
+
 
         return _mapper.Map<IEnumerable<StepResponse>>(steps).ToList();
     }

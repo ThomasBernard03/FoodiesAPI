@@ -1,3 +1,5 @@
+using Foodies.Models.Responses.Step;
+
 namespace Foodies.Models.Responses.Recipe;
 
 public class RecipeResponse
@@ -6,4 +8,6 @@ public class RecipeResponse
     public string Name { get; set; } = "";
     public string Picture { get; set; } = "";
     public TimeSpan Duration { get; set; }
+
+    public IEnumerable<StepResponse>? Steps { get; set; }
 }
