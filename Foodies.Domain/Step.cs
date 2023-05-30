@@ -8,4 +8,6 @@ public class Step : BaseEntity
     
     public long RecipeId { get; set; }
     public Recipe Recipe { get; set; }
+    
+    public ICollection<StepIngredient> StepIngredients { get; set; }
 }

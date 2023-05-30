@@ -3,6 +3,7 @@ using System;
 using Foodies.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Foodies.DataAccess.Migrations
 {
     [DbContext(typeof(FoodiesDbContext))]
-    partial class FoodiesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230530165453_StepIngredient")]
+    partial class StepIngredient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,7 +58,12 @@ namespace Foodies.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<long?>("UnitOfMeasureId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UnitOfMeasureId");
 
                     b.ToTable("Ingredient");
                 });
@@ -143,6 +151,14 @@ namespace Foodies.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UnitOfMeasure");
+                });
+
+            modelBuilder.Entity("Foodies.Domain.Ingredient", b =>
+                {
+                    b.HasOne("Foodies.Domain.UnitOfMeasure", null)
+                        .WithMany()
+                        .HasForeignKey("UnitOfMeasureId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Foodies.Domain.Step", b =>
