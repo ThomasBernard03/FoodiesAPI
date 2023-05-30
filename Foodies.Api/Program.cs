@@ -21,7 +21,7 @@ var mapperConfig = new MapperConfiguration(config =>
 
 builder.Services.AddSingleton(mapperConfig.CreateMapper());
 
-var dbConnection = builder.Configuration.GetConnectionString("DefaultConnection") ?? "";
+var dbConnection = builder.Configuration.GetConnectionString("PgServer") ?? "";
 builder.Services.AddScoped(_ => new FoodiesDbContext(dbConnection));
 
 var app = builder.Build();
@@ -35,7 +35,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
     
-    //FakeDataSeeder.Seed(app.Services);
+    // FakeDataSeeder.Seed(app.Services);
 }
 
 app.UseHttpsRedirection();

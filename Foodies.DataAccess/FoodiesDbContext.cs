@@ -15,8 +15,8 @@ public class FoodiesDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
-
-        optionsBuilder.UseSqlServer(_dbConnection)
+        
+        optionsBuilder.UseNpgsql(_dbConnection)
             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     }
 
