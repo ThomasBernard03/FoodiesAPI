@@ -1,5 +1,10 @@
+[![CI/CD](https://github.com/ThomasBernard03/FoodiesAPI/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/ThomasBernard03/FoodiesAPI/actions/workflows/main.yml)
+
 # FoodiesAPI
-API for the Foodies project
+
+## Introduction
+
+This API allows you to manage a recipe book, creating, modifying and deleting recipes, ingredients and preparation steps.
 
 
 ## Development
