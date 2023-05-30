@@ -85,6 +85,29 @@ public class RecipeController : ControllerBase
 
     #endregion
     
+    #region PATCH recipes/{id}
+
+    [HttpPatch("{id}")]
+    public async Task<ActionResult<RecipeResponse>> UpdateIngredients([FromRoute] long id, [FromBody] JsonPatchDocument<RecipeRequest> request)
+    {
+        var recipe = await _context.Set<Recipe>().FirstOrDefaultAsync(i => i.Id == id);
+
+        if (recipe is null)
+            return NotFound($"Recipe with id {id} doesn't exist");
+
+        var updateCommand = _mapper.Map<RecipeRequest>(recipe);
+        
+        request.ApplyTo(updateCommand);
+
+        _mapper.Map(updateCommand, recipe);
+
+        _context.Update(recipe);
+
+        return _mapper.Map<RecipeResponse>(recipe);
+    }
+
+    #endregion
+    
 
     #region GET recipes/{id}/steps
 
