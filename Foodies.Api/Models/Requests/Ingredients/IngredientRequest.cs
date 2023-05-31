@@ -9,7 +9,4 @@ public class IngredientRequest
     
     [Required]
     public string Picture { get; set; } = "";
-    
-    [Required]
-    public long UnitOfMeasureId { get; set; }
 }

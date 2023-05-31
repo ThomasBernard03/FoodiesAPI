@@ -39,11 +39,6 @@ public class IngredientController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<IngredientResponse>> CreateIngredients([FromBody] IngredientRequest request)
     {
-        var unitOfMeasure = await _context.Set<UnitOfMeasure>().FirstOrDefaultAsync(u => u.Id == request.UnitOfMeasureId);
-
-        if (unitOfMeasure is null)
-            return NotFound($"Unit Of Measure with id {request.UnitOfMeasureId} doesn't exist");
-
         var ingredient = _mapper.Map<Ingredient>(request);
 
         await _context.Set<Ingredient>().AddAsync(ingredient);
